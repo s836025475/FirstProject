@@ -231,7 +231,7 @@ namespace FirstProject.Controllers
 
                     //}
 
-                    data.SchoolName += "已出售";
+                    data.SchoolName = "已出售";
                     db.SaveChanges();
                 }
                 catch (Exception ex)
