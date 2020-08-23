@@ -1,0 +1,15 @@
+﻿@model FirstProject.ViewModels.SchoolVMs.SchoolVM
+@inject IStringLocalizer<WalkingTec.Mvvm.Core.Program> Localizer;
+
+<wt:form vm="@Model">
+<wt:row items-per-row="ItemsPerRowEnum.Two">
+<wt:textbox field="Entity.SchoolCode" />
+<wt:textbox field="Entity.SchoolName" />
+<wt:combobox field="Entity.SchoolType" />
+<wt:textbox field="Entity.Remark" />
+</wt:row>
+    <wt:row align="AlignEnum.Right">
+        <wt:submitbutton />
+        <wt:closebutton />
+    </wt:row>
+</wt:form>

@@ -1,0 +1,62 @@
+﻿@model FirstProject.ViewModels.SchoolVMs.SchoolListVM
+@inject IStringLocalizer<WalkingTec.Mvvm.Core.Program> Localizer;
+
+<wt:searchpanel vm="@Model" reset-btn="true">
+<wt:row items-per-row="ItemsPerRowEnum.Three">
+<wt:textbox field="Searcher.SchoolCode" />
+<wt:textbox field="Searcher.SchoolName" />
+<wt:combobox field="Searcher.SchoolType" empty-text="@Localizer["All"]" />
+</wt:row>
+</wt:searchpanel>
+<wt:grid vm="@Model" url="/School/Search"/>
+
+<script>
+
+    function CheckSold(id) {
+        ///StudioManagement/工作室信息表/GetContact?Id=
+        //var id = document.getElementById('id').textContent;
+        var price = 0;
+        layer.open({
+            id: 1,
+            type: 1,
+            title: '请输入要出售的价格',
+            style: 'width:80%;height:auto;',
+            content: "<div style='display:flex;justify-content:center;'><textarea id='area' style='width:100%;height:135px;'></textarea></div>",
+            btn: ['确认出售', '取消'],
+            yes: function (index, layero) {
+                //获取输入框里面的值
+                var price = top.$("#area").val() || $("#area").val();
+                if (price > 0) {
+                    console.log(price);
+                    $.ajax({
+                        url: 'School/SellGameCommodity?ID=' + id + "&price=" + price,
+                        type: 'GET',
+                        ontentType: "application/json;charset=utf-8",
+                        //dataType: 'json',
+                        success: function (data) {
+
+                            var result = JSON.parse(data);
+                            console.log("test");
+                            if (result.obj == "0") {
+                                layer.alert('出售成功', { icon: 1 });
+                            } else {
+                                layer.alert(result.message);
+                            }
+                        },
+                        error: function () {
+                            layer.alert('出售失败，请联系技术。');
+                        }
+                    });
+                }
+                else {
+                    layer.alert('价格输入错误');
+                }
+                layer.close(index);
+                // 在这里提交数据
+            },
+            no: function (index, layero) {
+                layer.close(index);
+            }
+        });
+    }
+</script>
